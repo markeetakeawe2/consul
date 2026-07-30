@@ -49,6 +49,10 @@ func (f *FSM) Restore(rc io.ReadCloser) error {
 		return err
 	}
 
+	if snapData.Index <= f.lastIndex {
+		return nil
+	}
+
 	f.state.Restore(snapData.Services)
 	f.lastIndex = snapData.Index
 
